@@ -1,0 +1,601 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>加入我们 - 智慧旅游</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <header class="header">
+        <div class="header__container">
+            <h1 class="header__title">加入我们</h1>
+            <div class="header__icon" aria-label="招聘图标">💼</div>
+        </div>
+    </header>
+
+    <nav class="nav">
+        <div class="nav__container">
+            <button class="nav__toggle" aria-label="切换菜单">
+                <span class="nav__toggle-bar"></span>
+                <span class="nav__toggle-bar"></span>
+                <span class="nav__toggle-bar"></span>
+            </button>
+            <ul class="nav__list">
+                <li class="nav__item"><a href="index.html" class="nav__link">首页</a></li>
+                <li class="nav__item"><a href="index.html#guide" class="nav__link">智能导览</a></li>
+                <li class="nav__item"><a href="index.html#recommend" class="nav__link">个性化推荐</a></li>
+                <li class="nav__item"><a href="index.html#service" class="nav__link">智能客服</a></li>
+                <li class="nav__item"><a href="index.html#analysis" class="nav__link">数据分析</a></li>
+                <li class="nav__item"><a href="jobs.html" class="nav__link nav__link--active">加入我们</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <main class="main main--jobs">
+        <div class="main__container main__container--jobs">
+            <section class="jobs-hero">
+                <h2 class="jobs-hero__title">与我们一起，用科技重塑旅游体验</h2>
+                <p class="jobs-hero__subtitle">我们正在寻找充满激情的你，共同打造下一代智慧旅游平台</p>
+            </section>
+
+            <section class="filter-section">
+                <div class="filter-group">
+                    <label class="filter-label">城市</label>
+                    <div class="filter-options" data-filter="city">
+                        <button class="filter-btn filter-btn--active" data-value="all">全部</button>
+                        <button class="filter-btn" data-value="北京">北京</button>
+                        <button class="filter-btn" data-value="上海">上海</button>
+                        <button class="filter-btn" data-value="深圳">深圳</button>
+                        <button class="filter-btn" data-value="杭州">杭州</button>
+                        <button class="filter-btn" data-value="成都">成都</button>
+                    </div>
+                </div>
+                <div class="filter-group">
+                    <label class="filter-label">岗位类型</label>
+                    <div class="filter-options" data-filter="type">
+                        <button class="filter-btn filter-btn--active" data-value="all">全部</button>
+                        <button class="filter-btn" data-value="技术">技术研发</button>
+                        <button class="filter-btn" data-value="产品">产品设计</button>
+                        <button class="filter-btn" data-value="运营">市场运营</button>
+                        <button class="filter-btn" data-value="数据">数据算法</button>
+                    </div>
+                </div>
+                <div class="filter-group">
+                    <label class="filter-label">经验要求</label>
+                    <div class="filter-options" data-filter="experience">
+                        <button class="filter-btn filter-btn--active" data-value="all">全部</button>
+                        <button class="filter-btn" data-value="应届生">应届生</button>
+                        <button class="filter-btn" data-value="1-3年">1-3年</button>
+                        <button class="filter-btn" data-value="3-5年">3-5年</button>
+                        <button class="filter-btn" data-value="5年以上">5年以上</button>
+                    </div>
+                </div>
+            </section>
+
+            <section class="job-list" id="jobList">
+            </section>
+
+            <div class="empty-state" id="emptyState" style="display: none;">
+                <div class="empty-state__icon">🔍</div>
+                <p class="empty-state__text">暂无符合条件的职位，试试其他筛选条件吧</p>
+            </div>
+        </div>
+    </main>
+
+    <div class="job-detail-modal" id="jobDetailModal">
+        <div class="job-detail-modal__mask"></div>
+        <div class="job-detail-modal__content">
+            <button class="job-detail-modal__close" aria-label="关闭">×</button>
+            <div class="job-detail-modal__body" id="jobDetailBody"></div>
+        </div>
+    </div>
+
+    <div class="apply-modal" id="applyModal">
+        <div class="apply-modal__mask"></div>
+        <div class="apply-modal__content">
+            <button class="apply-modal__close" aria-label="关闭">×</button>
+            <h3 class="apply-modal__title">投递简历</h3>
+            <p class="apply-modal__job" id="applyJobName"></p>
+            <form class="apply-form" id="applyForm">
+                <div class="form-group">
+                    <label class="form-label" for="applicantName">姓名 <span class="form-required">*</span></label>
+                    <input type="text" class="form-input" id="applicantName" name="name" required placeholder="请输入您的姓名">
+                </div>
+                <div class="form-group">
+                    <label class="form-label" for="applicantPhone">手机号 <span class="form-required">*</span></label>
+                    <input type="tel" class="form-input" id="applicantPhone" name="phone" required placeholder="请输入您的手机号">
+                </div>
+                <div class="form-group">
+                    <label class="form-label" for="applicantEmail">邮箱 <span class="form-required">*</span></label>
+                    <input type="email" class="form-input" id="applicantEmail" name="email" required placeholder="请输入您的邮箱">
+                </div>
+                <div class="form-group">
+                    <label class="form-label" for="applicantResume">简历上传 <span class="form-required">*</span></label>
+                    <div class="file-upload">
+                        <input type="file" class="file-upload__input" id="applicantResume" name="resume" accept=".pdf,.doc,.docx" required>
+                        <div class="file-upload__label">
+                            <span class="file-upload__icon">📄</span>
+                            <span class="file-upload__text">点击上传简历</span>
+                        </div>
+                        <span class="file-upload__name" id="uploadedFileName"></span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-label" for="applicantMessage">自我介绍</label>
+                    <textarea class="form-textarea" id="applicantMessage" name="message" rows="4" placeholder="简单介绍一下自己吧（选填）"></textarea>
+                </div>
+                <button type="submit" class="btn btn--primary btn--block">提交申请</button>
+            </form>
+        </div>
+    </div>
+
+    <div class="toast" id="toast"></div>
+
+    <footer class="footer">
+        <p class="footer__text">智慧旅游科普&copy; 2025</p>
+    </footer>
+
+    <script>
+        var jobsData = [
+            {
+                id: 1,
+                title: "高级前端工程师",
+                type: "技术",
+                city: "北京",
+                experience: "3-5年",
+                salary: "25k-40k",
+                status: "open",
+                responsibilities: [
+                    "负责智慧旅游平台前端架构设计与核心模块开发",
+                    "优化页面性能，提升用户体验",
+                    "与产品、设计团队紧密协作，推动产品迭代",
+                    "参与前端技术选型与技术规范制定"
+                ],
+                requirements: [
+                    "本科及以上学历，计算机相关专业",
+                    "3年以上前端开发经验，精通 HTML/CSS/JavaScript",
+                    "熟练掌握 React 或 Vue 框架，有大型项目经验",
+                    "了解 Node.js，有前后端分离项目经验",
+                    "具备良好的沟通能力和团队协作精神"
+                ],
+                team: "我们的前端团队由15名资深工程师组成，负责公司核心产品的用户端开发。团队注重技术分享与成长，每月举办技术分享会，鼓励成员探索新技术并应用到实际项目中。"
+            },
+            {
+                id: 2,
+                title: "后端开发工程师",
+                type: "技术",
+                city: "上海",
+                experience: "3-5年",
+                salary: "28k-45k",
+                status: "open",
+                responsibilities: [
+                    "负责旅游平台后端服务的设计与开发",
+                    "参与系统架构设计，保障系统高可用",
+                    "优化数据库查询和接口性能",
+                    "编写技术文档，保障代码质量"
+                ],
+                requirements: [
+                    "本科及以上学历，3年以上后端开发经验",
+                    "精通 Java 或 Python，熟悉 Spring Boot/Django 框架",
+                    "熟悉 MySQL、Redis、MongoDB 等数据库",
+                    "有微服务架构经验优先",
+                    "具备良好的问题分析和解决能力"
+                ],
+                team: "后端团队承担着平台核心业务逻辑的开发，是产品稳定运行的基石。我们追求代码质量和工程效率，推崇敏捷开发和持续集成。"
+            },
+            {
+                id: 3,
+                title: "产品经理",
+                type: "产品",
+                city: "深圳",
+                experience: "3-5年",
+                salary: "20k-35k",
+                status: "open",
+                responsibilities: [
+                    "负责智慧旅游产品的规划与设计",
+                    "进行用户调研和需求分析，输出产品方案",
+                    "协调研发、设计、运营团队推进产品落地",
+                    "跟踪产品数据，持续优化产品体验"
+                ],
+                requirements: [
+                    "本科及以上学历，3年以上互联网产品经验",
+                    "有旅游、本地生活或ToC产品经验优先",
+                    "具备优秀的逻辑思维和沟通能力",
+                    "熟练使用 Axure、Figma 等原型工具",
+                    "数据驱动，能够通过数据分析发现问题"
+                ],
+                team: "产品团队是公司的大脑，我们深入理解用户需求，用产品思维解决实际问题。团队氛围开放，鼓励每个人表达观点、参与决策。"
+            },
+            {
+                id: 4,
+                title: "UI/UX 设计师",
+                type: "产品",
+                city: "杭州",
+                experience: "1-3年",
+                salary: "15k-25k",
+                status: "open",
+                responsibilities: [
+                    "负责产品的视觉设计和交互设计",
+                    "制定设计规范，维护设计系统",
+                    "参与用户研究，优化用户体验",
+                    "与产品、开发团队紧密协作"
+                ],
+                requirements: [
+                    "本科及以上学历，设计相关专业",
+                    "1-3年 UI/UX 设计经验",
+                    "精通 Figma、Sketch 等设计工具",
+                    "有完整的作品集，具备良好的审美能力",
+                    "了解前端开发知识优先"
+                ],
+                team: "设计团队是产品美学的守护者，我们相信好的设计能让技术更有温度。团队定期组织设计分享和作品互评，共同成长。"
+            },
+            {
+                id: 5,
+                title: "算法工程师",
+                type: "数据",
+                city: "北京",
+                experience: "5年以上",
+                salary: "40k-60k",
+                status: "open",
+                responsibilities: [
+                    "负责推荐系统算法的研发与优化",
+                    "设计个性化推荐策略，提升用户留存和转化",
+                    "跟进前沿算法研究，落地到实际业务场景",
+                    "与工程团队协作，推动算法上线"
+                ],
+                requirements: [
+                    "硕士及以上学历，计算机、数学相关专业",
+                    "5年以上推荐算法或机器学习经验",
+                    "精通常见的机器学习和深度学习算法",
+                    "熟练使用 Python、TensorFlow/PyTorch",
+                    "有大规模推荐系统落地经验优先"
+                ],
+                team: "算法团队是产品智能化的核心驱动力，我们用 AI 技术让旅游变得更智能、更个性化。团队与多所高校有研究合作，学术与工程并重。"
+            },
+            {
+                id: 6,
+                title: "数据分析师",
+                type: "数据",
+                city: "成都",
+                experience: "1-3年",
+                salary: "12k-20k",
+                status: "open",
+                responsibilities: [
+                    "负责业务数据的统计与分析",
+                    "搭建数据指标体系，输出分析报告",
+                    "深入挖掘用户行为数据，为产品决策提供支持",
+                    "与各业务线协作，推动数据驱动决策"
+                ],
+                requirements: [
+                    "本科及以上学历，统计学、数学相关专业优先",
+                    "1-3年数据分析经验",
+                    "熟练使用 SQL、Excel、Python/R",
+                    "熟悉 BI 工具（如 Tableau）优先",
+                    "具备良好的沟通能力和业务理解能力"
+                ],
+                team: "数据团队是公司的智囊，我们用数据说话，为业务发展提供洞察和建议。我们鼓励团队成员深入业务，成为懂业务的数据专家。"
+            },
+            {
+                id: 7,
+                title: "内容运营",
+                type: "运营",
+                city: "上海",
+                experience: "应届生",
+                salary: "8k-12k",
+                status: "open",
+                responsibilities: [
+                    "负责旅游内容的策划与编辑",
+                    "维护社交媒体账号，提升品牌影响力",
+                    "策划线上活动，提升用户活跃度",
+                    "跟踪内容数据，持续优化内容策略"
+                ],
+                requirements: [
+                    "本科及以上学历，2025届应届生",
+                    "热爱旅游，有丰富的旅行经历优先",
+                    "文笔优秀，具备内容创作能力",
+                    "熟悉小红书、抖音等社交平台",
+                    "积极主动，学习能力强"
+                ],
+                team: "运营团队是连接产品与用户的桥梁，我们用创意和热情让更多人了解智慧旅游。团队年轻有活力，鼓励创新和试错。"
+            },
+            {
+                id: 8,
+                title: "市场推广经理",
+                type: "运营",
+                city: "深圳",
+                experience: "3-5年",
+                salary: "18k-30k",
+                status: "open",
+                responsibilities: [
+                    "负责品牌市场推广策略的制定与执行",
+                    "管理线上线下营销渠道，提升品牌知名度",
+                    "策划营销活动，推动用户增长",
+                    "分析市场数据，优化投放效果"
+                ],
+                requirements: [
+                    "本科及以上学历，3年以上市场推广经验",
+                    "有旅游、互联网行业经验优先",
+                    "熟悉数字营销渠道和投放优化",
+                    "具备优秀的沟通协调能力",
+                    "数据驱动，能够独立策划营销方案"
+                ],
+                team: "市场团队负责品牌的对外发声，我们通过精准的营销策略让更多用户认识和爱上我们的产品。团队氛围开放，资源丰富。"
+            },
+            {
+                id: 9,
+                title: "运维工程师",
+                type: "技术",
+                city: "成都",
+                experience: "3-5年",
+                salary: "20k-35k",
+                status: "closed",
+                responsibilities: [
+                    "负责公司服务器和基础设施的运维管理",
+                    "保障系统稳定运行，快速响应故障",
+                    "优化运维流程，提升运维自动化水平",
+                    "参与架构设计，提供运维专业建议"
+                ],
+                requirements: [
+                    "本科及以上学历，3年以上运维经验",
+                    "熟悉 Linux 系统和网络原理",
+                    "掌握 Docker、Kubernetes 等容器技术",
+                    "有云平台（阿里云/AWS）使用经验",
+                    "具备良好的问题排查和解决能力"
+                ],
+                team: "运维团队是产品稳定运行的守护者，我们用专业技术保障服务7×24小时高可用。团队注重流程化和自动化，追求卓越的运维质量。"
+            }
+        ];
+
+        var currentFilters = {
+            city: 'all',
+            type: 'all',
+            experience: 'all'
+        };
+
+        var currentJobId = null;
+
+        var navToggle = document.querySelector('.nav__toggle');
+        var navList = document.querySelector('.nav__list');
+        if (navToggle && navList) {
+            navToggle.addEventListener('click', function () {
+                navList.classList.toggle('nav__list--active');
+            });
+        }
+
+        function renderJobList() {
+            var jobList = document.getElementById('jobList');
+            var emptyState = document.getElementById('emptyState');
+            
+            var filteredJobs = jobsData.filter(function(job) {
+                if (currentFilters.city !== 'all' && job.city !== currentFilters.city) return false;
+                if (currentFilters.type !== 'all' && job.type !== currentFilters.type) return false;
+                if (currentFilters.experience !== 'all' && job.experience !== currentFilters.experience) return false;
+                return true;
+            });
+
+            if (filteredJobs.length === 0) {
+                jobList.innerHTML = '';
+                emptyState.style.display = 'flex';
+                return;
+            }
+
+            emptyState.style.display = 'none';
+            jobList.innerHTML = filteredJobs.map(function(job) {
+                var isClosed = job.status === 'closed';
+                var statusLabel = isClosed ? '已关闭' : '热招';
+                var statusClass = isClosed ? 'job-card__status--closed' : 'job-card__status--open';
+                
+                return '<article class="job-card' + (isClosed ? ' job-card--closed' : '') + '" data-id="' + job.id + '">' +
+                    '<div class="job-card__header">' +
+                        '<h3 class="job-card__title">' + job.title + '</h3>' +
+                        '<span class="job-card__status ' + statusClass + '">' + statusLabel + '</span>' +
+                    '</div>' +
+                    '<div class="job-card__meta">' +
+                        '<span class="job-card__meta-item">📍 ' + job.city + '</span>' +
+                        '<span class="job-card__meta-item">💼 ' + job.type + '</span>' +
+                        '<span class="job-card__meta-item">⏱️ ' + job.experience + '</span>' +
+                    '</div>' +
+                    '<div class="job-card__salary">💰 ' + job.salary + '</div>' +
+                    '<div class="job-card__footer">' +
+                        '<button class="btn btn--text job-card__detail-btn" data-id="' + job.id + '">查看详情 →</button>' +
+                        (isClosed 
+                            ? '<button class="btn btn--disabled" disabled>职位已关闭</button>'
+                            : '<button class="btn btn--primary btn--small job-card__apply-btn" data-id="' + job.id + '">立即投递</button>') +
+                    '</div>' +
+                '</article>';
+            }).join('');
+
+            document.querySelectorAll('.job-card__detail-btn').forEach(function(btn) {
+                btn.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    var jobId = parseInt(this.getAttribute('data-id'));
+                    openJobDetail(jobId);
+                });
+            });
+
+            document.querySelectorAll('.job-card__apply-btn').forEach(function(btn) {
+                btn.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    var jobId = parseInt(this.getAttribute('data-id'));
+                    openApplyModal(jobId);
+                });
+            });
+
+            document.querySelectorAll('.job-card').forEach(function(card) {
+                if (!card.classList.contains('job-card--closed')) {
+                    card.addEventListener('click', function() {
+                        var jobId = parseInt(this.getAttribute('data-id'));
+                        openJobDetail(jobId);
+                    });
+                }
+            });
+        }
+
+        function openJobDetail(jobId) {
+            var job = jobsData.find(function(j) { return j.id === jobId; });
+            if (!job) return;
+
+            currentJobId = jobId;
+            var isClosed = job.status === 'closed';
+
+            var body = document.getElementById('jobDetailBody');
+            body.innerHTML = 
+                '<div class="job-detail__header">' +
+                    '<div>' +
+                        '<h2 class="job-detail__title">' + job.title + '</h2>' +
+                        '<div class="job-detail__meta">' +
+                            '<span>📍 ' + job.city + '</span>' +
+                            '<span>💼 ' + job.type + '</span>' +
+                            '<span>⏱️ ' + job.experience + '</span>' +
+                        '</div>' +
+                    '</div>' +
+                    '<div class="job-detail__salary">💰 ' + job.salary + '</div>' +
+                '</div>' +
+                '<span class="job-card__status ' + (isClosed ? 'job-card__status--closed' : 'job-card__status--open') + '">' + (isClosed ? '已关闭' : '热招中') + '</span>' +
+                
+                '<div class="job-detail__section">' +
+                    '<h4 class="job-detail__section-title">岗位职责</h4>' +
+                    '<ul class="job-detail__list">' +
+                        job.responsibilities.map(function(r) { return '<li>' + r + '</li>'; }).join('') +
+                    '</ul>' +
+                '</div>' +
+                
+                '<div class="job-detail__section">' +
+                    '<h4 class="job-detail__section-title">任职要求</h4>' +
+                    '<ul class="job-detail__list">' +
+                        job.requirements.map(function(r) { return '<li>' + r + '</li>'; }).join('') +
+                    '</ul>' +
+                '</div>' +
+                
+                '<div class="job-detail__section">' +
+                    '<h4 class="job-detail__section-title">团队介绍</h4>' +
+                    '<p class="job-detail__team-desc">' + job.team + '</p>' +
+                '</div>' +
+                
+                '<div class="job-detail__actions">' +
+                    (isClosed 
+                        ? '<button class="btn btn--disabled btn--block" disabled>该职位已关闭，无法投递</button>'
+                        : '<button class="btn btn--primary btn--block" id="detailApplyBtn">立即投递简历</button>') +
+                '</div>';
+
+            var modal = document.getElementById('jobDetailModal');
+            modal.classList.add('job-detail-modal--visible');
+            document.body.style.overflow = 'hidden';
+
+            if (!isClosed) {
+                document.getElementById('detailApplyBtn').addEventListener('click', function() {
+                    closeJobDetail();
+                    setTimeout(function() {
+                        openApplyModal(jobId);
+                    }, 200);
+                });
+            }
+        }
+
+        function closeJobDetail() {
+            var modal = document.getElementById('jobDetailModal');
+            modal.classList.remove('job-detail-modal--visible');
+            document.body.style.overflow = '';
+        }
+
+        function openApplyModal(jobId) {
+            var job = jobsData.find(function(j) { return j.id === jobId; });
+            if (!job || job.status === 'closed') return;
+
+            currentJobId = jobId;
+            document.getElementById('applyJobName').textContent = '职位：' + job.title + '（' + job.city + '）';
+            
+            document.getElementById('applyForm').reset();
+            document.getElementById('uploadedFileName').textContent = '';
+
+            var modal = document.getElementById('applyModal');
+            modal.classList.add('apply-modal--visible');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeApplyModal() {
+            var modal = document.getElementById('applyModal');
+            modal.classList.remove('apply-modal--visible');
+            document.body.style.overflow = '';
+        }
+
+        function showToast(message, type) {
+            var toast = document.getElementById('toast');
+            toast.textContent = message;
+            toast.className = 'toast toast--' + (type || 'success');
+            toast.classList.add('toast--visible');
+            
+            setTimeout(function() {
+                toast.classList.remove('toast--visible');
+            }, 3000);
+        }
+
+        document.querySelectorAll('.filter-options').forEach(function(group) {
+            var filterType = group.getAttribute('data-filter');
+            group.addEventListener('click', function(e) {
+                if (!e.target.classList.contains('filter-btn')) return;
+                
+                var value = e.target.getAttribute('data-value');
+                currentFilters[filterType] = value;
+                
+                group.querySelectorAll('.filter-btn').forEach(function(btn) {
+                    btn.classList.remove('filter-btn--active');
+                });
+                e.target.classList.add('filter-btn--active');
+                
+                renderJobList();
+            });
+        });
+
+        document.querySelector('.job-detail-modal__close').addEventListener('click', closeJobDetail);
+        document.querySelector('.job-detail-modal__mask').addEventListener('click', closeJobDetail);
+
+        document.querySelector('.apply-modal__close').addEventListener('click', closeApplyModal);
+        document.querySelector('.apply-modal__mask').addEventListener('click', closeApplyModal);
+
+        document.getElementById('applicantResume').addEventListener('change', function(e) {
+            var fileName = e.target.files.length > 0 ? e.target.files[0].name : '';
+            document.getElementById('uploadedFileName').textContent = fileName;
+        });
+
+        document.getElementById('applyForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            var job = jobsData.find(function(j) { return j.id === currentJobId; });
+            if (!job || job.status === 'closed') {
+                showToast('该职位已关闭，无法投递', 'error');
+                return;
+            }
+
+            var name = document.getElementById('applicantName').value.trim();
+            var phone = document.getElementById('applicantPhone').value.trim();
+            var email = document.getElementById('applicantEmail').value.trim();
+            var resume = document.getElementById('applicantResume').files.length > 0;
+
+            if (!name || !phone || !email || !resume) {
+                showToast('请填写完整信息并上传简历', 'error');
+                return;
+            }
+
+            var phoneRegex = /^1[3-9]\d{9}$/;
+            if (!phoneRegex.test(phone)) {
+                showToast('请输入正确的手机号', 'error');
+                return;
+            }
+
+            showToast('简历投递成功！我们会尽快与您联系', 'success');
+            closeApplyModal();
+        });
+
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                closeJobDetail();
+                closeApplyModal();
+            }
+        });
+
+        renderJobList();
+    </script>
+</body>
+</html>
